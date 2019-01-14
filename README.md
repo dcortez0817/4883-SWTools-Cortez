@@ -1,2 +1,9 @@
-# 4883-SWTools-Cortez
-Repository for Software Tools Class
+# 4443-Mobile-Apps-Cortez
+
+Darien Cortez
+
+darien.cortez@gmail.com
+
+http://dariencortez.wordpress.com
+
+![DAC](/DAC.jpg)
