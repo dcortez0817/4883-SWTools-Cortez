@@ -1,3 +1,3 @@
-#Tool:
+Tool:
 
-#Why I picked it:
+Why I picked it:
