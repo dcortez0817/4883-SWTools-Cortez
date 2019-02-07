@@ -1,7 +1,7 @@
 # Hello
 * follow this code
-```
-* npm
+* ```
+npm
 ```
 * do as i say
 
