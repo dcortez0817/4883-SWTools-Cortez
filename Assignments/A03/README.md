@@ -8,3 +8,9 @@
 
   * retrieves the game ids from the json file and places them in the ```NFL.com/liveupdate/game-center/(gameid)/(gameid)_gtd.json``` url 
 in order to scrape all regular season and post season game stats from 2009 to 2019
+
+# Instructions
+Run the files in this order
+
+ 1. If you don't have game ids, run ```scrape_game_ids.py```
+ 2. If you already have game ids, run ```scrape_game_data.py```
