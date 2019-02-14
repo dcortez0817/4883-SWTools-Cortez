@@ -10,7 +10,7 @@
 in order to scrape all regular season and post season game stats from 2009 to 2019
 
 # Instructions
-Run the files in this order
+<strong>Run the files in this order:</strong>
 
  1. If you don't have game ids, run ```scrape_game_ids.py```
  2. If you already have game ids, run ```scrape_game_data.py```
