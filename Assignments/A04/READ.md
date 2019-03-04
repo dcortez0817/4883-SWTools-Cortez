@@ -19,8 +19,7 @@ This project uses SQL and Php to query nfl stats from the cs2 mwsu phpmyadmin da
    * Rank the NFL by win loss percentage (worst first)
    * The top 5 most common last names in the NFL
    
-<strong>Files Ignored</strong>
-
+<strong>Files Ignored:</strong>
 ```sftp.json```
  * holds the login information for the cs2 phpmyadmin database
  
