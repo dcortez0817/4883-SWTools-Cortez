@@ -21,11 +21,11 @@ This project uses SQL and Php to query nfl stats from the cs2 mwsu phpmyadmin da
    
 <strong>Files Ignored:</strong>
 
- ```sftp.json```
-  * holds the login information for the cs2 phpmyadmin database
- 
- ```config.php```
-  * holds my login information for the cs2 phpmyadmin database
+```sftp.json```
+* holds the login information for the cs2 phpmyadmin database
+
+```config.php```
+ * holds my login information for the cs2 phpmyadmin database
    
 
 # Instructions
