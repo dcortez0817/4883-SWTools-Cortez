@@ -2,6 +2,7 @@
 
 ```query_function.php```
  * file that holds the function to query data from the cs2 myadmin database
+ 
 ```stats.py```
  * requires the ```query_function.php``` file to find the following information:
    * Count number of teams an individual player played for
