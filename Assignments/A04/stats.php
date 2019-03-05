@@ -1,5 +1,4 @@
 <?php
-
 //contains the config information to allow you to connect to the server
 require 'config.php';
 
@@ -246,7 +245,7 @@ if($response['success']){
 //*************************************************************************************************
 //The top 5 players with the shortest avg field goal length
 //*************************************************************************************************
-echo "\n8. Top 5 players that had field goals over 40 yards\n\n";
+echo "\n9. Bottom 5 players average field goal length\n\n";
 echo str_pad("PlayerId", 25, ' '), str_pad("Name", 25, ' '), str_pad("# Seasons Played", 25, ' '), str_pad("Total kicking yards", 25, ' '), 
         str_pad("Total field goals", 25, ' '), str_pad("Avg kicking yards", 25, ' ');
 echo "\n";
