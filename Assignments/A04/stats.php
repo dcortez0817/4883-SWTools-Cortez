@@ -113,7 +113,7 @@ $sql = "SELECT DISTINCT(ps.playerid), p.name, ps.tot_seasons, ps.rush_yards
         FROM players_stats
         WHERE yards < 0 AND statid=10
         GROUP BY playerid) AS ps
-        INNER JOIN players as p
+        INNER JOIN players AS p
         ON ps.playerid=p.id
         ORDER BY rush_yards DESC
         LIMIT 5";
@@ -186,10 +186,59 @@ if($response['success']){
 //*************************************************************************************************
 //The Team with the least amount of average plays every year (Top 10 teams)
 //*************************************************************************************************
+echo "\n7. Bottom 10 teams with the average number of plays per year\n\n";
+echo str_pad("Team", 25, ' '), str_pad("Season", 25, ' '), str_pad("# plays", 25, ' '), str_pad("# games", 25, ' '), str_pad("Avg Plays", 25, ' ');
+echo "\n";
+
+$sql = "SELECT club, season, COUNT(DISTINCT(playid)) AS num_plays, COUNT(DISTINCT(gameid)) AS num_games, COUNT(DISTINCT(playid))/ COUNT(DISTINCT(gameid)) AS AVG_plays
+        FROM players_stats
+        GROUP BY club, season
+        ORDER BY AVG_plays ASC
+        LIMIT 10";
+
+//run function for sql query
+$response = runQuery($mysqli, $sql);
+
+if($response['success']){
+    foreach($response['result'] as $row){
+        echo str_pad("{$row['club']}", 25, ' '),
+            str_pad("{$row['season']}", 25, ' '),
+            str_pad("{$row['num_plays']}", 25, ' '),
+            str_pad("{$row['num_games']}", 25, ' '),
+            str_pad("{$row['AVG_plays']}", 25, ' ');
+        echo "\n";
+    }
+}
 //*************************************************************************************************
    
 //The top 5 players that had field goals over 40 yards
 //*************************************************************************************************
+echo "\n8. Top 5 players that had field goals over 40 yards\n\n";
+echo str_pad("PlayerId", 25, ' '), str_pad("Name", 25, ' '), str_pad("# Seasons", 25, ' '), str_pad("Total field goals", 25, ' ');
+echo "\n";
+
+$sql = "SELECT DISTINCT(ps.playerid), p.name, ps.tot_seasons, ps.rush_yards
+        FROM (SELECT playerid, COUNT(DISTINCT(season)) as tot_seasons, COUNT(yards) as 'rush_yards'
+        FROM players_stats
+        WHERE yards < 0 AND statid=10
+        GROUP BY playerid) AS ps
+        INNER JOIN players AS p
+        ON ps.playerid=p.id
+        ORDER BY rush_yards DESC
+        LIMIT 5";
+
+//run function for sql query
+$response = runQuery($mysqli, $sql);
+
+if($response['success']){
+    foreach($response['result'] as $row){
+        echo str_pad("{$row['playerid']}", 25, ' '),
+            str_pad("{$row['name']}", 25, ' '),
+            str_pad("{$row['tot_seasons']}", 25, ' '),
+            str_pad("-{$row['rush_yards']}", 25, ' ');
+        echo "\n";
+    }
+}
 //*************************************************************************************************
    
 //The top 5 players with the shortest avg field goal length
