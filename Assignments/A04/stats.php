@@ -279,6 +279,25 @@ if($response['success']){
 //*************************************************************************************************
 //Rank the NFL by win loss percentage (worst first)
 //*************************************************************************************************
+echo "\n10. Rank the NFL by win loss percentage (worst first)\n\n";
+echo str_pad("Team", 25, ' '), str_pad("Win/Loss %", 25, ' ');
+echo "\n";
+
+$sql = "SELECT DISTINCT(club), SUM(wonloss='won')/ SUM(wonloss='loss') * 100 as win_loss
+        FROM game_totals
+        GROUP BY club
+        ORDER BY win_loss ASC";
+
+//run function for sql query
+$response = runQuery($mysqli, $sql);
+
+if($response['success']){
+    foreach($response['result'] as $row){
+        echo str_pad("{$row['club']}", 25, ' '),
+            str_pad("{$row['win_loss']}", 25, ' ');
+        echo "\n";
+    }
+}
 //*************************************************************************************************
 
 //*************************************************************************************************    
