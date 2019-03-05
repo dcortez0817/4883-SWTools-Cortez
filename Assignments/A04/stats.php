@@ -253,7 +253,7 @@ echo "\n";
 $sql = "SELECT DISTINCT(ps.playerid), p.name, ps.tot_seasons, ps.tot_kick_yards, ps.num_field_goals, ps.avg_kick_yards
         FROM (SELECT playerid, COUNT(DISTINCT(season)) as tot_seasons, SUM(yards) AS tot_kick_yards, COUNT(yards) AS num_field_goals, SUM(yards)/COUNT(yards) AS 'avg_kick_yards'
               FROM players_stats
-              WHERE yards AND statid=70
+              WHERE statid=70
               GROUP BY playerid) AS ps
               INNER JOIN players AS p
               ON ps.playerid=p.id
