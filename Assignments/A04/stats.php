@@ -10,54 +10,196 @@ echo "<pre>";   // so whitespace matters
 echo "<h4>Name: Darien Cortez<br></h4>";
 echo "<h4>Assignment: A04 - Nfl Stats<br></h4>";
 echo "<h4>Date: 3/1/2019<br></h4>";
-echo "<h4>===================================================================================<br></h4>";
+echo "<h4>===========================================================================================================================================
+\n</h4>";
 
+//*************************************************************************************************
 //Top ten people that played for the most teams
 //*************************************************************************************************
-echo "1. Count the number of teams an individual played for<br>";
+echo "1. Count the number of teams an individual played for\n\n";
+echo str_pad("PlayerId", 25, ' '), str_pad("Name", 25, ' '), str_pad("# Seasons", 25, ' '), str_pad("# Teams", 25, ' ');
+echo "\n";
 $sql = "SELECT id, name, COUNT(DISTINCT(season)) as '# seasons', COUNT(DISTINCT(club)) as '# teams'
         FROM players
         GROUP BY id, name
         ORDER BY COUNT(DISTINCT(club)) DESC
-        LIMIT 10"
+        LIMIT 10";
 
 //run function for sql query
 $response = runQuery($mysqli, $sql);
 
 if($response['success']){
     foreach($response['result'] as $row){
-        echo "{$row['id']} {$row['name']} {$row['# seasons']} {$row['# teams']}\n";
+        echo str_pad("{$row['id']}", 25, ' '),
+            str_pad("{$row['name']}", 25, ' '),
+            str_pad("{$row['# seasons']}", 25, ' '),
+            str_pad("{$row['# teams']}", 25, ' ');
+        echo "\n";
     }
 }
 //*************************************************************************************************
 
+//*************************************************************************************************
 //Top five players with the highest total rushing yards per year
 //*************************************************************************************************
-echo "2. Players that rushed for the most yards per year<br>";
-$sql = "SELECT players_stats.playerid, players.name, players.season,sum(players_stats.yards) as 'total rushing yards'
-        FROM players_stats
-        INNER JOIN players
-        ON players_stats.playerid=players.id
-        WHERE statid=10 or statid=75 or statid=76
-        GROUP BY players_stats.playerid, players.season
-        ORDER BY sum(players_stats.yards) DESC
-        LIMIT 5"
+echo "\n2. Players that rushed for the most yards per year\n\n";
+echo str_pad("PlayerId", 25, ' '), str_pad("Name", 25, ' '), str_pad("Season", 25, ' '), str_pad("Total rushing yards", 25, ' ');
+echo "\n";
+
+$sql = "SELECT DISTINCT(ps.playerid), p.name, ps.season, ps.rush_yards
+        FROM (SELECT playerid, season, SUM(yards) as 'rush_yards'
+        FROM `players_stats`
+        WHERE statid=10
+        GROUP BY playerid, season) AS ps
+        INNER JOIN players as p
+        ON ps.playerid=p.id
+        ORDER BY ps.rush_yards DESC
+        LIMIT 5";
+
+//run function for sql query
+$response = runQuery($mysqli, $sql);
+
+if($response['success']){
+    foreach($response['result'] as $row){
+        echo str_pad("{$row['playerid']}", 25, ' '),
+            str_pad("{$row['name']}", 25, ' '),
+            str_pad("{$row['season']}", 25, ' '),
+            str_pad("{$row['rush_yards']}", 25, ' ');
+        echo "\n";
+    }
+}
 //*************************************************************************************************
 
+//*************************************************************************************************
 //Bottom 5 players with the total passing  per year
+//*************************************************************************************************
+echo "\n3. Bottom 5 players with the least total passing yards per year\n\n";
+echo str_pad("PlayerId", 25, ' '), str_pad("Name", 25, ' '), str_pad("Season", 25, ' '), str_pad("Total passing yards", 25, ' ');
+echo "\n";
 
+$sql = "SELECT DISTINCT(ps.playerid), p.name, ps.season, ps.pass_yards
+        FROM (SELECT playerid, season, SUM(yards) as 'pass_yards'
+        FROM `players_stats`
+        WHERE statid=15
+        GROUP BY playerid, season) AS ps
+        INNER JOIN players as p
+        ON ps.playerid=p.id
+        ORDER BY ps.pass_yards ASC
+        LIMIT 5";
+
+//run function for sql query
+$response = runQuery($mysqli, $sql);
+
+if($response['success']){
+    foreach($response['result'] as $row){
+        echo str_pad("{$row['playerid']}", 25, ' '),
+            str_pad("{$row['name']}", 25, ' '),
+            str_pad("{$row['season']}", 25, ' '),
+            str_pad("{$row['pass_yards']}", 25, ' ');
+        echo "\n";
+    }
+}
+//*************************************************************************************************
+
+//*************************************************************************************************
 //Top 5 players that had the most rushes for a loss
+//*************************************************************************************************
+echo "\n4. Top 5 players with the most rushes for loss\n\n";
+echo str_pad("PlayerId", 25, ' '), str_pad("Name", 25, ' '), str_pad("# Seasons", 25, ' '), str_pad("Total rushing yards", 25, ' ');
+echo "\n";
 
+$sql = "SELECT DISTINCT(ps.playerid), p.name, ps.tot_seasons, ps.rush_yards
+        FROM (SELECT playerid, COUNT(DISTINCT(season)) as tot_seasons, COUNT(yards) as 'rush_yards'
+        FROM players_stats
+        WHERE yards < 0 AND statid=10
+        GROUP BY playerid) AS ps
+        INNER JOIN players as p
+        ON ps.playerid=p.id
+        ORDER BY rush_yards DESC
+        LIMIT 5";
+
+//run function for sql query
+$response = runQuery($mysqli, $sql);
+
+if($response['success']){
+    foreach($response['result'] as $row){
+        echo str_pad("{$row['playerid']}", 25, ' '),
+            str_pad("{$row['name']}", 25, ' '),
+            str_pad("{$row['tot_seasons']}", 25, ' '),
+            str_pad("-{$row['rush_yards']}", 25, ' ');
+        echo "\n";
+    }
+}
+//*************************************************************************************************
+
+//*************************************************************************************************
 //Top 5 teams with the most penalties
+//*************************************************************************************************
+echo "\n5. Top 5 teams with the most penalties\n\n";
+echo str_pad("Team", 25, ' '), str_pad("Total Penalties", 25, ' ');
+echo "\n";
 
+$sql = "SELECT club, SUM(pen)
+        FROM game_totals
+        GROUP BY club
+        ORDER BY SUM(pen) DESC
+        LIMIT 5";
+
+//run function for sql query
+$response = runQuery($mysqli, $sql);
+
+if($response['success']){
+    foreach($response['result'] as $row){
+        echo str_pad("{$row['club']}", 25, ' '),
+            str_pad("{$row['SUM(pen)']}", 25, ' ');
+        echo "\n";
+    }
+}
+//*************************************************************************************************
+
+//*************************************************************************************************
 //The average number of penalties per year (Top 10 seasons)
-   
+//*************************************************************************************************
+echo "\n6. Average number of penalties per year\n\n";
+echo str_pad("Season", 25, ' '), str_pad("Total Penalties", 25, ' '), str_pad("Avg Penalties", 25, ' ');
+echo "\n";
+
+$sql = "SELECT season, SUM(pen), SUM(pen) / COUNT(DISTINCT(gameid))
+        FROM game_totals
+        GROUP BY season
+        ORDER BY SUM(pen) / COUNT(DISTINCT(gameid)) DESC
+        LIMIT 10";
+
+//run function for sql query
+$response = runQuery($mysqli, $sql);
+
+if($response['success']){
+    foreach($response['result'] as $row){
+        echo str_pad("{$row['season']}", 25, ' '),
+            str_pad("{$row['SUM(pen)']}", 25, ' '),
+            str_pad("{$row['SUM(pen) / COUNT(DISTINCT(gameid))']}", 25, ' ');
+        echo "\n";
+    }
+}
+//*************************************************************************************************
+
+//*************************************************************************************************
 //The Team with the least amount of average plays every year (Top 10 teams)
+//*************************************************************************************************
+//*************************************************************************************************
    
 //The top 5 players that had field goals over 40 yards
+//*************************************************************************************************
+//*************************************************************************************************
    
 //The top 5 players with the shortest avg field goal length
+//*************************************************************************************************
+//*************************************************************************************************
     
 //Rank the NFL by win loss percentage (worst first)
+//*************************************************************************************************
+//*************************************************************************************************
     
 //The top 5 most common last names in the NFL
+//*************************************************************************************************
+//*************************************************************************************************
