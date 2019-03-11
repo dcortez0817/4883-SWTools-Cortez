@@ -6,7 +6,8 @@ Github username: dcortez0817
 Repo url: https://github.com/dcortez0817/4883-SWTools-Cortez
 Name: Darien Cortez
 Description: 
-    
+    This program scrapes all 878 emojis from the https://www.webfx.com/tools/emoji-cheat-sheet/
+    website and stores the images in the emojis folder.
 """
 from beautifulscraper import BeautifulScraper
 import urllib
