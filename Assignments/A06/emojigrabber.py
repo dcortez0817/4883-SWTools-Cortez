@@ -21,6 +21,5 @@ page = scraper.go(url)
 # then loop through the page with the following
 for emoji in page.find_all("span",{"class":"emoji"}):
     image_path = emoji['data-src'].split("/")
-    print(url+url+emoji["data-src"])
     # save the image using requests library
     urllib.request.urlretrieve(url+emoji["data-src"], 'emojis/'+image_path[-1])
