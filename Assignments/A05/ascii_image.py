@@ -1,6 +1,6 @@
 import os
 import sys
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from pil import Image, ImageDraw, ImageFont, ImageFilter
 
 def img_to_ascii(**kwargs):
     """ 
@@ -79,7 +79,7 @@ def ascii_img_to_color(orig, ascii_im, w, h,font, size):
     newImg = Image.new('RGBA', (w*5,h*5), (255,255,255,255))
     
     #Open a TTF file and specify the font size
-    fnt = ImageFont.truetype(font, size)
+    fnt = ImageFont.truetype('Richland.ttf', size)
 
     #Get a drawing context for your new image
     drawOnMe = ImageDraw.Draw(newImg)
@@ -88,6 +88,7 @@ def ascii_img_to_color(orig, ascii_im, w, h,font, size):
     rgb_im = orig.convert('RGB')
 
     i = 0
+    ## Loop through your old image and write on the newImg
     for y in range(h):
         for x in range(w):
             #Ascii character from list
