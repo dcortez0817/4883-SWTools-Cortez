@@ -1,6 +1,7 @@
 import os
 import sys
-from pil import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
+
 
 def img_to_ascii(**kwargs):
     """ 
@@ -9,7 +10,8 @@ def img_to_ascii(**kwargs):
     0 - 25 = '#' (darkest character)
     250-255 = '.' (lightest character)
     """
-    ascii_chars = [ u'🦍', 'A', '@', '%', 'S', '+', '<', '*', ':', ',', '.']
+    
+    {ascii_chars = [ "[", '-', '%', '#', 'Q', ';', 'M', 'J', 'X', '?', '!']
   
     width = kwargs.get('width',200)
     path = kwargs.get('path',None)
@@ -28,30 +30,16 @@ def img_to_ascii(**kwargs):
 
     i = 1
     for val in imlist:
-        ch = ascii_chars[val // 25].decode('utf-8')
-        sys.stdout.write()
+        uni = ascii_chars[val // 25]
+        uni = uni.encode('utf-8')
+        sys.stdout.write(str(uni))
         i += 1
         if i % width == 0:
             sys.stdout.write("\n")
-
-
-    #Copy of original resized image
-    original = im
-    #Assign ascii character to grayscale ranges
-    imlist[:] = [ascii_chars[val // 25] for val in imlist]
-    """
-    #Write ascii art to file
-    f = open("demofile.txt", "w")
-    i = 1
-    for val in imlist:
-        f.write(val)
-        i += 1
-        if i % width == 0:
-            f.write("\n")
-    f.close()
-    """
     
-    return original, imlist, w, h 
+    return im, imlist, w, h
+
+    
 
 def resize(img,width):
     """
@@ -67,69 +55,13 @@ def resize(img,width):
 
     return img
 
-if __name__=='__main__':
-    path = 'vans.jpg'
-Ascii = img_to_ascii(path=path,width=150)
-
-def ascii_img_to_color(orig, ascii_im, w, h,font, size):
-    #Open a new image using 'RGBA' (a colored image with alpha channel for transparency)
-    #              color_type      (w,h)     (r,g,b,a) 
-    #                   \           /            /
-    #                    \         /            /
-    newImg = Image.new('RGBA', (w*5,h*5), (255,255,255,255))
-    
-    #Open a TTF file and specify the font size
-    fnt = ImageFont.truetype('Richland.ttf', size)
-
-    #Get a drawing context for your new image
-    drawOnMe = ImageDraw.Draw(newImg)
-
-    #Convert original image to rgb
-    rgb_im = orig.convert('RGB')
-
-    i = 0
-    ## Loop through your old image and write on the newImg
-    for y in range(h):
-        for x in range(w):
-            #Ascii character from list
-            c = ascii_im[i]
-            #Increment
-            i = i+1
-
-            #Color of pixel in original img
-            color = rgb_im.getpixel((x,y)) 
-
-            #Add a character to some xy 
-            #         location   character  ttf-font   color-tuple
-            #            \         /        /            /
-            #             \       /        /            /
-            drawOnMe.text(((x*5)-1,(y*5)-1), c, font=fnt, fill=color)
-            #Uncomment to overlap characters and output better image
-            """drawOnMe.text(((x*5)-1,(y*5)+1), c, font=fnt, fill=color)
-            drawOnMe.text(((x*5)+1,(y*5)-1), c, font=fnt, fill=color)
-            drawOnMe.text(((x*5)+1,(y*5)+1), c, font=fnt, fill=color)"""
-    return newImg
-
-
 
 if __name__=='__main__':
-    #Path to image (./input_images/picture.jpg) 
-    input_path = sys.argv[1]
-    #Path to output (./output_images/output.png)
-    output_path = sys.argv[2]
-    #Path to font type (./path_to_file/fonttype.ttf)
-    font_type = sys.argv[3]
-    #Size of font
-    font_size = sys.argv[4]
-
-    #Convert image to ascii
-    orig, ascii_im, w, h = img_to_ascii(path=input_path,width=150)
-
-    #Redrawn ascii image
-    img = ascii_img_to_color(orig,ascii_im,w,h, font_type, int(font_size))
-
+    path = '/Users/richard cortez/desktop/4883-SWTools-Cortez/Assignments/A05/input_images/vans-logo.png'
+    #path = '/Users/griffin/Dropbox/Scripts-random/image_projects/AsciiArt/original_images/superman.jpg'
+    #path = '/Users/griffin/Dropbox/Scripts-random/image_projects/AsciiArt/original_images/vans-logo.png'
+    Ascii = img_to_ascii(path=path,width=200)
     #Display your new image 
-    img.show()
-
+    Ascii.show()
     #Save the image
-img.save(output_path)
+    Ascii.save(output_images)
