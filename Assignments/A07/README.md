@@ -5,4 +5,4 @@
 # How to run the program
 
 * run match.py from the command line
-* Ex: ~ python match.py folder=emojis image=boom.png ~
+* Ex: ~ python match.py folder=emojis image=boom.png
