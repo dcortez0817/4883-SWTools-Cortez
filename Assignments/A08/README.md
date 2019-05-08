@@ -1,6 +1,6 @@
 # Not Finished
 
-# To Do List
+## To Do List
 
 * Look at shape?
 * Do we rotate a sub-image to fit it better?
