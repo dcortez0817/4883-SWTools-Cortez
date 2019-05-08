@@ -158,20 +158,3 @@ def get_dominant_colors(img,save_path=None,n=3):
         colors[i]['brightness'] = brightness(colors[i]['rgb'][0],colors[i]['rgb'][1],colors[i]['rgb'][2])
 
     return colors
-
-
-
-if __name__=='__main__':
-    # path to image to process
-    img = './lilly_400x.jpg'
-
-    # gets a json of dominant colors
-    # if you supply a path (like './lilly_colors_bar.jpg') it will save the color bar there.
-    # it also lets you specify number of clusters if you want
-    colors1 = get_dominant_colors(img,'./lilly_colors_3_bar.jpg')
-
-    # 4 clusters and save image
-    colors2 = get_dominant_colors(img,'./lilly_colors_4_bar.jpg',4)
-    
-    # What you should probably use
-colors = get_dominant_colors(img)
