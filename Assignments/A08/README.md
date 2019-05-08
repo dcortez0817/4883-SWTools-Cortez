@@ -1,8 +1,8 @@
 # Description
 
-This program 
+This program takes an original image, calculates each individual pixel's dominant colors, and replaces each pixel with a subimage primarily composed of that pixel's dominant color in order to create a mosaic form of that image.
 
-## To Do List
+## Original To Do List
 
 * Look at shape?
 * Do we rotate a sub-image to fit it better?
